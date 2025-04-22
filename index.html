@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Love Calculator</title>
+  <title>Sevgi Kalkulyatori</title>
   <style>
     * {
       box-sizing: border-box;
@@ -13,102 +13,116 @@
       padding: 0;
       height: 100%;
       font-family: 'Arial', sans-serif;
-      background: linear-gradient(to top right, #ffe4ec, #c2fcff);
-      overflow: hidden; /* skrollni yo'q qilish */
+      background: linear-gradient(to top right, #ffdee9, #b5fffc);
+      overflow: hidden;
     }
     .container {
       width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-evenly;
-      align-items: center;
-      padding: 10px;
+      max-width: 500px;
+      margin: auto;
+      padding: 30px 20px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
     }
-    .title {
-      font-size: 20px;
-      font-weight: bold;
-      color: #ff4081;
+    h2 {
       text-align: center;
+      color: #ff4081;
     }
     input, select, button {
-      width: 90%;
-      max-width: 280px;
-      padding: 8px;
-      border-radius: 8px;
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 10px;
       border: 1px solid #ccc;
-      font-size: 14px;
-      margin: 2px 0;
+      font-size: 16px;
     }
     button {
       background-color: #ff4081;
       color: white;
-      border: none;
       cursor: pointer;
+      border: none;
     }
     #result {
-      font-size: 18px;
-      color: #ff4081;
       text-align: center;
-      margin-top: 5px;
+      font-size: 24px;
+      color: #ff4081;
+      margin-top: 20px;
       font-weight: bold;
     }
-    #status {
-      font-size: 16px;
+    .status {
       text-align: center;
-      color: #333;
-    }
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
+      font-size: 28px;
+      margin-top: 15px;
     }
     .heart {
       position: absolute;
-      width: 40px;
-      height: 40px;
+      width: 60px;
+      height: 60px;
       background: url('https://cdn-icons-png.flaticon.com/512/833/833472.png') no-repeat center/contain;
-      animation: floatUp 5s linear infinite;
-      opacity: 0.7;
+      animation: floatUp 6s linear;
+      opacity: 0.8;
       z-index: 1;
     }
     @keyframes floatUp {
-      0% { transform: translateY(100vh); opacity: 0; }
-      50% { opacity: 1; }
-      100% { transform: translateY(-150vh); opacity: 0; }
+      0% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-150vh);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="title">❤️ Sevgi Darajasi</div>
-    
-    <div class="form-group">
-      <input type="text" id="name1" placeholder="Sizning ismingiz">
-      <input type="number" id="age1" placeholder="Yoshingiz">
-      <input type="number" id="height1" placeholder="Bo'yingiz (sm)">
-      <select id="gender1">
-        <option value="male">Erkak</option>
-        <option value="female">Ayol</option>
-      </select>
+    <h2>💖 Sevgi Darajasi</h2>
+    <input type="text" id="name1" placeholder="Sizning ismingiz">
+    <input type="number" id="age1" placeholder="Sizning yoshingiz">
+    <input type="number" id="height1" placeholder="Sizning bo'yingiz (sm)">
+    <select id="gender1">
+      <option value="male">Erkak</option>
+      <option value="female">Ayol</option>
+    </select>
 
-      <input type="text" id="name2" placeholder="Uning ismi">
-      <input type="number" id="age2" placeholder="Uning yoshi">
-      <input type="number" id="height2" placeholder="Uning bo'yi (sm)">
-      <select id="gender2">
-        <option value="female">Ayol</option>
-        <option value="male">Erkak</option>
-      </select>
+    <input type="text" id="name2" placeholder="Sevgan insoningiz ismi">
+    <input type="number" id="age2" placeholder="Uning yoshi">
+    <input type="number" id="height2" placeholder="Uning bo'yi (sm)">
+    <select id="gender2">
+      <option value="female">Ayol</option>
+      <option value="male">Erkak</option>
+    </select>
 
-      <button onclick="showResult()">Hisoblash</button>
-    </div>
-
+    <button onclick="showResult()">Natijani Ko‘rish</button>
     <div id="result"></div>
-    <div id="status"></div>
+    <div class="status" id="status"></div>
   </div>
 
   <script>
+    function createFloatingHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (Math.random() * 3 + 4) + "s";
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 6000);
+    }
+
+    // Har 500ms da bitta yurak chiqadi
+    setInterval(createFloatingHeart, 500);
+
     function calculateLove() {
       const age1 = parseInt(document.getElementById("age1").value);
       const age2 = parseInt(document.getElementById("age2").value);
@@ -156,27 +170,11 @@
       if (result >= 90) status = "💍 Ideal juftlik!";
       else if (result >= 75) status = "😍 Zo‘r moslik!";
       else if (result >= 60) status = "😊 Moslik yaxshi!";
-      else if (result >= 40) status = "🙂 Biroz harakat kerak!";
+      else if (result >= 40) status = "🙂 Bir oz ishlash kerak!";
       else status = "😢 Qiyin munosabat...";
 
       document.getElementById("status").textContent = status;
-      launchHearts();
-    }
-
-    function launchHearts() {
-      for (let i = 0; i < 30; i++) {
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.animationDuration = (Math.random() * 2 + 4) + "s";
-        document.body.appendChild(heart);
-
-        setTimeout(() => {
-          heart.remove();
-        }, 5000);
-      }
     }
   </script>
 </body>
 </html>
-
