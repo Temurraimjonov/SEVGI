@@ -1,149 +1,65 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sevgi Kalkulyatori</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ta'mirlash ishlari</title>
   <style>
-    html, body {
+    body {
       margin: 0;
-      padding: 0;
-      height: 100%;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(-45deg, #00aaff, #0055ff, #33ccff, #0088cc);
-      background-size: 400% 400%;
-      animation: gradient 10s ease infinite;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    }
-
-    @keyframes gradient {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    .heart {
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      background: url('https://cdn-icons-png.flaticon.com/512/833/833472.png') no-repeat center/contain;
-      animation: floatUp 6s linear infinite;
-      opacity: 0.7;
-      z-index: 0;
-    }
-
-    @keyframes floatUp {
-      0% { transform: translateY(100vh); opacity: 0; }
-      50% { opacity: 1; }
-      100% { transform: translateY(-150vh); opacity: 0; }
-    }
-
-    .form-box {
-      position: relative;
-      z-index: 1;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 0 20px rgba(255,255,255,0.3);
-      text-align: center;
-      color: #fff;
-    }
-
-    input {
-      padding: 10px;
-      border-radius: 10px;
-      border: none;
-      margin: 10px;
-      font-size: 16px;
-      width: 80%;
-    }
-
-    button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 10px;
-      background: #ffffff;
-      color: #000;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    .result {
-      margin-top: 20px;
-      font-size: 24px;
-      font-weight: bold;
-      color: #fff;
-    }
-
-    /* Sozlash oynasi */
-    .maintenance {
-      position: fixed;
-      top: 0;
-      left: 0;
-      background: rgba(0,0,0,0.6);
+      background-color: #0a0a0a;
       color: white;
-      font-size: 28px;
-      font-weight: bold;
-      width: 100%;
-      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      z-index: 2;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .loader {
+      border: 8px solid #333;
+      border-top: 8px solid #00d9ff;
+      border-radius: 50%;
+      width: 70px;
+      height: 70px;
+      animation: spin 1.5s linear infinite;
+      margin-bottom: 30px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    h1 {
+      font-size: 2rem;
+      text-align: center;
+      color: #ffffff;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #bbb;
+      animation: fadeIn 3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .glow {
+      color: #00f0ff;
+      text-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff;
     }
   </style>
 </head>
 <body>
-
-  <!-- ❗ Sozlash ishlari olib borilmoqda (hozircha o‘chirilgan) -->
-  <!--
-  <div class="maintenance">
-    🛠 Sozlash ishlari olib borilmoqda...
-  </div>
-  -->
-
-  <div class="form-box">
-    <h2>💖 Sevgi Foizi Kalkulyatori 💖</h2>
-    <input type="text" id="ism1" placeholder="Sizning ismingiz">
-    <input type="text" id="ism2" placeholder="Uning ismi">
-    <br>
-    <button onclick="hisobla()">Hisobla</button>
-    <div class="result" id="natija"></div>
-  </div>
-
-  <script>
-    function launchHearts() {
-      for (let i = 0; i < 10; i++) {
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 6000);
-      }
-    }
-    setInterval(launchHearts, 3000);
-
-    function hisobla() {
-      const ism1 = document.getElementById("ism1").value.trim();
-      const ism2 = document.getElementById("ism2").value.trim();
-      const natija = document.getElementById("natija");
-
-      if (ism1 === "" || ism2 === "") {
-        natija.textContent = "Iltimos, ikkala ismni ham kiriting!";
-        return;
-      }
-
-      // "Tasodifiy" sevgi foizi (har safar boshqacha)
-      const sevgi = Math.floor(Math.random() * 51) + 50;
-      natija.textContent = `💘 ${ism1} va ${ism2} orasidagi sevgi darajasi: ${sevgi}%`;
-    }
-  </script>
-
+  <div class="loader"></div>
+  <h1 class="glow">Ta'mirlash ishlari olib borilmoqda...</h1>
+  <p>Iltimos, keyinroq qayta urinib ko‘ring.</p>
 </body>
 </html>
